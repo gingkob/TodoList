@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import TodoInput from './components/TodoInput';
 import TodoItem from './components/TodoItem';
-import { Divider } from '@material-ui/core';
+import { Box, Button, Divider } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -23,26 +23,32 @@ const TodoList = () => {
 
   const onSubmit = () => {
     let id = 1;
-    if (todos.length > 0){
-      id = Math.max(todos.map(todo => todo.id))+1
+    if (todos.length > 0) {
+      id = todos.sort((a, b) => {
+        if ((a.id - b.id) > 0) {
+          return -1
+        }
+        else return 1
+      })
+      id = id[0].id + 1
     }
     let todoItem = {
       id,
-      text:todo,
+      text: todo,
       isDone: false,
       craetedAt: new Date(),
       updatedAt: new Date()
     }
-    setTodos([...todos, todoItem]);
+    setTodos([todoItem, ...todos]);
     setTodo("")
   }
-  const onChange = (e) =>{
+  const onChange = (e) => {
     setTodo(e.target.value)
   }
 
-  const toggleChange = (id) =>{
-    let newArr = todos.map(todo =>{
-      if(todo.id === id){
+  const toggleChange = (id) => {
+    let newArr = todos.map(todo => {
+      if (todo.id === id) {
         todo.isDone = !todo.isDone
       }
       return todo;
@@ -50,16 +56,37 @@ const TodoList = () => {
     setTodos(newArr);
   }
 
-  const deleteTodo = (id) =>{
-    setTodos(todos.filter(todo=>todo.id !== id))
+  const deleteTodo = (id) => {
+    setTodos(todos.filter(todo => todo.id !== id))
   }
 
   return (
     <div className={classes.root}>
       <Paper elevation={2}>
-        <TodoInput todo={todo} onChange={onChange} onSubmit={onSubmit}/>
-        <Divider />
-        <TodoItem todos={todos} toggleChange={toggleChange} onDelete={deleteTodo}/>
+        <TodoInput todo={todo} onChange={onChange} onSubmit={onSubmit} />
+        {todos.length ?
+          <>
+            <Divider />
+            <TodoItem todos={todos} toggleChange={toggleChange} onDelete={deleteTodo} />
+            <Divider />
+            <Box style={{ display: 'flex', marginTop: "8px", width: "100%" }}>
+              <Paper elevation={1} style={{ marginRight: "8px" }}>
+                <Button variant='outlined' color='primary'>All</Button>
+              </Paper>
+              <Paper elevation={1} style={{ marginRight: "8px" }}>
+                <Button variant='outlined' color='primary'>Completed</Button>
+              </Paper>
+              <Paper elevation={1} style={{ marginRight: "8px" }}>
+                <Button variant='outlined' color='primary'>Due</Button>
+              </Paper>
+              <Paper elevation={1} style={{ marginLeft: "auto" }}>
+                <Button variant='outlined' color='secondary'>Prev</Button>
+              </Paper>
+              <Paper elevation={1} style={{ marginLeft: "8px" }}>
+                <Button variant='outlined' color='secondary'>Next</Button>
+              </Paper>
+            </Box>
+          </> : null}
       </Paper>
     </div>
   )
