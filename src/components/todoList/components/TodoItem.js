@@ -16,10 +16,6 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiListItem-gutters': {
       paddingLeft: '10px',
       paddingRight: '0px',
-      marginTop: "5px",
-      borderLeft: '1px solid green',
-      borderRight: '1px solid green',
-      borderRadius: "4px",
     },
   },
 }));
@@ -28,22 +24,25 @@ const TodoItem = ({ todos, toggleChange, onDelete }) => {
   const classes = useStyles();
   return (
     <List dense className={classes.root}>
-      {todos.map((todo) => {
+      {todos.map((todo, index) => {
         return (
-          <Paper key={todo.id} elevation={2}>
-            <ListItem >
+          <Paper key={todo.id} elevation={1} style={{
+            display: "flex", borderLeft: '1px solid green',
+            borderRight: '1px solid green',
+            borderRadius: "4px", marginTop: index !== 0 ? "5px" : "0px"
+          }} >
+            <ListItem onClick={() => alert(todo.id)}>
               <ListItemText primary={todo.text} />
-              <Checkbox
-                edge="end"
-                onChange={() => toggleChange(todo.id)}
-                checked={todo.isDone}
-              />
-              <IconButton onClick={() => onDelete(todo.id)}>
-                <DeleteForever color='error' />
-              </IconButton>
             </ListItem>
+            <Checkbox
+              edge="end"
+              onChange={() => toggleChange(todo.id)}
+              checked={todo.isDone}
+            />
+            <IconButton onClick={() => onDelete(todo.id)}>
+              <DeleteForever color='error' />
+            </IconButton>
           </Paper>
-
         );
       })}
     </List>
