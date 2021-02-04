@@ -7,6 +7,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForever from '@material-ui/icons/DeleteForever';
 import Paper from '@material-ui/core/Paper';
+import { useTodos } from '../../../store/Store'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoItem = ({ todos, toggleChange, onDelete }) => {
+const TodoItem = () => {
+  const { todos, toggleTodo, deleteTodo } = useTodos();
   const classes = useStyles();
   return (
     <List dense className={classes.root}>
@@ -36,10 +38,10 @@ const TodoItem = ({ todos, toggleChange, onDelete }) => {
             </ListItem>
             <Checkbox
               edge="end"
-              onChange={() => toggleChange(todo.id)}
-              checked={todo.isDone}
+              onChange={() => toggleTodo(todo.id)}
+              checked={todo.isCompleted}
             />
-            <IconButton onClick={() => onDelete(todo.id)}>
+            <IconButton onClick={() => deleteTodo(todo.id)}>
               <DeleteForever color='error' />
             </IconButton>
           </Paper>

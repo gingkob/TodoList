@@ -1,10 +1,11 @@
+import React, { useState } from 'react';
 import { Button, TextField, Paper, Box } from '@material-ui/core';
-import React from 'react';
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from '@material-ui/core/styles';
+import { useTodos } from '../../../store/Store';
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display:'flex',
+    display: 'flex',
     marginBottom: theme.spacing(1),
     '& .MuiFormControl-root': {
       verticalAlign: "middle !important",
@@ -23,17 +24,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const TodoInput = (props) => {
-  const { todo = "", onChange, onSubmit } = props;
+const TodoInput = () => {
+  const { addTodo } = useTodos();
+  const [todo, setTodo] = useState("")
   const classes = useStyles()
+
+  const onSubmit = () => {
+    addTodo(todo);
+    setTodo("")
+  }
+
   return (
     <Box className={classes.root}>
-    <Paper elevation={1} id="firstPaper">
-        <TextField label="What is on your mind today?" variant="outlined" value={todo} onChange={onChange} />
-    </Paper>
-    <Paper elevation={1}>
+      <Paper elevation={1} id="firstPaper">
+        <TextField label="What is on your mind today?" variant="outlined" value={todo} onChange={(e) => setTodo(e.target.value)} />
+      </Paper>
+      <Paper elevation={1}>
         <Button disabled={!todo.trim().length} variant="contained" color="secondary" size='large' onClick={onSubmit}>Add Todo</Button>
-    </Paper>
+      </Paper>
     </Box>
   )
 }
