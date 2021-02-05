@@ -23,8 +23,6 @@ const useStyles = makeStyles((theme) => ({
 
 const TodoItem = () => {
   const { filteredTodos, toggleTodo, deleteTodo } = useTodos();
-  console.log("hello")
-  console.log(filteredTodos)
   const classes = useStyles();
   return (
     <List dense className={classes.root}>
