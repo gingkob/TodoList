@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState } from 'react';
 
 const Context = createContext({
-  todos:[]
+  todos: []
 })
 
 const Provider = ({ children }) => {
   const [todos, setTodos] = useState([]);
+  const [filter, setFilter] = useState('all');
 
   const addTodo = (todo) => {
     let id = todos.length ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
@@ -16,9 +17,9 @@ const Provider = ({ children }) => {
     setTodos(todos.filter(todo => todo.id !== id))
   }
 
-  const toggleTodo = (id) =>{
+  const toggleTodo = (id) => {
     setTodos(todos.map(todo => {
-      if(todo.id === id){
+      if (todo.id === id) {
         todo.isCompleted = !todo.isCompleted;
         return todo;
       }
@@ -26,7 +27,19 @@ const Provider = ({ children }) => {
     }))
   }
 
-  return (<Context.Provider value={{ todos, addTodo, deleteTodo, toggleTodo }}>{children}</Context.Provider>)
+  const filteredTodos = () => {
+    switch (filter) {
+      case 'completed': return todos.filter(todo => todo.isCompleted);
+      case 'due': return todos.filter(todo => !todo.isCompleted);
+      default: return todos;
+    }
+  }
+
+  const handleFilterChange = (filter) => {
+    setFilter(filter)
+  }
+
+  return (<Context.Provider value={{ filteredTodos, addTodo, deleteTodo, toggleTodo, filter, handleFilterChange }}>{children}</Context.Provider>)
 }
 
 export const useTodos = () => useContext(Context);

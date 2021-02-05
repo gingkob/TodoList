@@ -22,11 +22,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const TodoItem = () => {
-  const { todos, toggleTodo, deleteTodo } = useTodos();
+  const { filteredTodos, toggleTodo, deleteTodo } = useTodos();
+  console.log("hello")
+  console.log(filteredTodos)
   const classes = useStyles();
   return (
     <List dense className={classes.root}>
-      {todos.map((todo, index) => {
+      {filteredTodos().map((todo, index) => {
         return (
           <Paper key={todo.id} elevation={1} style={{
             display: "flex", borderLeft: '1px solid green',
