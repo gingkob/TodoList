@@ -7,6 +7,7 @@ const Context = createContext({
 const Provider = ({ children }) => {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState('all');
+  const [page, setPage] = useState(1)
 
   const addTodo = (todo) => {
     let id = todos.length ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
@@ -39,7 +40,15 @@ const Provider = ({ children }) => {
     setFilter(filter)
   }
 
-  return (<Context.Provider value={{ filteredTodos, addTodo, deleteTodo, toggleTodo, filter, handleFilterChange }}>{children}</Context.Provider>)
+  return (<Context.Provider
+    value={{
+      filteredTodos, addTodo,
+      deleteTodo, toggleTodo,
+      filter, handleFilterChange,
+      page
+    }}>
+    {children}
+  </Context.Provider>)
 }
 
 export const useTodos = () => useContext(Context);

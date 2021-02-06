@@ -1,7 +1,9 @@
-import React from 'react'
-import { Box, Button, Paper } from '@material-ui/core'
+import React from 'react';
+import { Box, Button, Paper } from '@material-ui/core';
+import { useTodos } from '../../../store/Store';
 
 const Filters = () => {
+  const { filteredTodos, page } = useTodos();
   return (
     <>
       <Box style={{ display: 'flex', marginTop: "8px", width: "100%" }}>
@@ -15,10 +17,10 @@ const Filters = () => {
           <Button variant='outlined' color='primary'>Due</Button>
         </Paper>
         <Paper elevation={1} style={{ marginLeft: "auto" }}>
-          <Button /* disabled={page === 1} */ variant='outlined' color='secondary'/*  onClick={() => setPage(prevState => prevState - 1)} */>Prev</Button>
+          <Button disabled={page === 1} variant='outlined' color='secondary'/*  onClick={() => setPage(prevState => prevState - 1)} */>Prev</Button>
         </Paper>
         <Paper elevation={1} style={{ marginLeft: "8px" }}>
-          <Button /* disabled={page >= Math.ceil((todos.length - 4) / 5)} variant='outlined' color='secondary' onClick={() => setPage(prevState => prevState + 1)} */>Next</Button>
+          <Button disabled={page >= Math.ceil((filteredTodos.length - 4) / 5)} variant='outlined' color='secondary' /* onClick={() => setPage(prevState => prevState + 1)} */>Next</Button>
         </Paper>
       </Box>
     </>
