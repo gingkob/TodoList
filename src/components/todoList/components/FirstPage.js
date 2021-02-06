@@ -10,7 +10,7 @@ const FirstPage = () => {
     firstPageTodos.length ?
       <>
         <Divider />
-        <TodoItem /* todos={todos.slice(5 * (page - 1), 4 + 5 * (page - 1))} */ />
+        <TodoItem todos={firstPageTodos} />
         <Divider />
         <Filters />
       </> : null

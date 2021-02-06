@@ -42,7 +42,10 @@ const Provider = ({ children }) => {
 
   return (<Context.Provider
     value={{
-      filteredTodos, addTodo,
+      firstPageTodos: filteredTodos().slice(5 * (page - 1), 4 + 5 * (page - 1)),
+      secondPageTodos: filteredTodos().slice(4 + 5 * (page - 1), 9 + 5 * (page - 1)),
+      filteredTodos: filteredTodos(),
+      addTodo,
       deleteTodo, toggleTodo,
       filter, handleFilterChange,
       page
