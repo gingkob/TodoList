@@ -5,6 +5,7 @@ import TodoInput from './components/TodoInput';
 import { withProvider } from '../../store/Store';
 import SecondPage from './components/SecondPage';
 import FirstPage from './components/FirstPage';
+import Filters from './components/Filters';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,6 +26,7 @@ const TodoList = () => {
       <Paper elevation={2}>
         <TodoInput />
         <FirstPage />
+        <Filters />
       </Paper>
       <SecondPage />
     </div>

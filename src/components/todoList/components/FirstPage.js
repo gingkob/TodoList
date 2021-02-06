@@ -1,6 +1,5 @@
 import React from 'react';
-import { Divider } from '@material-ui/core'
-import Filters from './Filters'
+import { Box } from '@material-ui/core';
 import TodoItem from './TodoItem';
 import { useTodos } from '../../../store/Store'
 
@@ -9,10 +8,9 @@ const FirstPage = () => {
   return (
     firstPageTodos.length ?
       <>
-        <Divider />
-        <TodoItem todos={firstPageTodos} />
-        <Divider />
-        <Filters />
+        <Box style={{ margin: '15px 0px' }}>
+          <TodoItem todos={firstPageTodos} />
+        </Box>
       </> : null
   )
 }

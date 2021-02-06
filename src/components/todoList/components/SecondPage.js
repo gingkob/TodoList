@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, IconButton, Paper, Typography } from '@material-ui/core';
+import { Box, IconButton, Paper, Typography } from '@material-ui/core';
 import { KeyboardArrowDown, KeyboardArrowLeft } from '@material-ui/icons';
 import { useTodos } from '../../../store/Store'
 import TodoItem from './TodoItem';
@@ -25,8 +25,9 @@ const SecondPage = () => {
           </span>
         </Paper>
       </div>
-      <Divider />
-      <TodoItem todos={secondPageTodos} />
+      <Box style={{ margin: '15px 0px 0px' }}>
+        <TodoItem todos={secondPageTodos} />
+      </Box>
     </Paper > : null
   )
 }

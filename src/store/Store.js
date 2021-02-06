@@ -40,6 +40,10 @@ const Provider = ({ children }) => {
     setFilter(filter)
   }
 
+  const changePage = (num) => {
+    setPage(prevState => prevState + num)
+  }
+
   return (<Context.Provider
     value={{
       firstPageTodos: filteredTodos().slice(5 * (page - 1), 4 + 5 * (page - 1)),
@@ -48,7 +52,7 @@ const Provider = ({ children }) => {
       addTodo,
       deleteTodo, toggleTodo,
       filter, handleFilterChange,
-      page
+      page, changePage
     }}>
     {children}
   </Context.Provider>)
